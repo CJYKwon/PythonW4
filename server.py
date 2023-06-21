@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 
 from forms import TeamForm, ProjectForm
 from model import db, User, Team, Project, connect_to_db
@@ -57,7 +57,7 @@ def projects():
     projects = user.get_all_projects()
     return render_template("projects.html", title = "Projects", page = "projects", projects = projects)
 
-@app.route("/update-team/<team_id>", methods=["GET", "POST"])
+@app.route("/update-team/<team_id>", methods = ["GET", "POST"])
 def update_team(team_id):
     form = TeamForm()
     team = Team.query.get(team_id)
@@ -68,11 +68,10 @@ def update_team(team_id):
             db.session.commit()
             return redirect(url_for("teams"))
         else:
-            return redirect(url_for("home"))
-
+            return redirect(url_for("home")) 
     else:
-        return render_template("update-team.html", title = f"Update {team.team_name}", page = "teams", team = team, form = form)
-
+        return render_template("update-team.html", title = f"Update{team.team_name}", page = "teams", team = team, form = form)
+        
 @app.route("/update-project/<project_id>", methods=["GET", "POST"])
 def update_project(project_id):
     form = ProjectForm()
@@ -94,12 +93,10 @@ def update_project(project_id):
     else:
         return render_template("update-project.html", title = f"Update {project.project_name}", page = "projects", project = project, form = form)
 
-@app.route("")
-def delete_project(project_id):
-    try:
-        print 'its working--Delete group'
-        if 
-
+@app.route("/")
+    def delete_team(team_id):
+    
+    
 if __name__ == "__main__":
     connect_to_db(app)
     app.run(debug = True)
